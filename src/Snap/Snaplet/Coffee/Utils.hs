@@ -47,3 +47,10 @@ getDestDir :: Maybe String -> CoffeeScript -> FilePath
 getDestDir Nothing   c = destDir c
 getDestDir (Just "") c = destDir c
 getDestDir (Just x)  _ = x
+
+
+requestedCoffeeFile :: String -> FilePath
+requestedCoffeeFile =
+     ("/"++) . (++"coffee") . reverse .dropWhile con2 . takeWhile con1 . reverse
+  where con1 = (/= '/')
+        con2 = (/= '.')
