@@ -1,4 +1,14 @@
-module Snap.Snaplet.Coffee.Utils where
+module Snap.Snaplet.Coffee.Utils
+       ( CompileMode(..)
+       , CoffeeScript(..)
+       , allCoffeeFiles
+       , destDir
+       , srcDir
+       , createDirUnlessExists
+       , getCompilerMode
+       , getDestDir
+       , requestedCoffeeFile
+       ) where
 
 import Control.Monad
 import System.Directory

@@ -1,21 +1,22 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Snap.Snaplet.Coffee( CoffeeScript
+module Snap.Snaplet.Coffee( CoffeeScript(..)
                           , initCoffee
                           , coffeeServe
                           ) where
 
-import qualified Data.Configurator as C
-import qualified Data.ByteString.Char8 as BS
+import qualified Data.Configurator as C (lookup)
+import qualified Data.ByteString.Char8 as BS (unpack)
 import           Snap.Snaplet
-import           Snap.Core
-import           Snap.Util.FileServe
+import           Snap.Core (rqURI, modifyResponse, getRequest, setContentType)
+import           Snap.Util.FileServe (serveDirectory)
 import           Snap.Snaplet.Coffee.Utils
-import           Control.Monad.Reader
-import           Control.Monad.State.Class
-import           Control.Applicative
-import           System.Exit
-import           Coffee.Bindings
+import           Control.Monad.Reader (liftIO, when, MonadIO)
+import           Control.Monad.State.Class (get)
+import           Control.Applicative ((<$>))
+import           System.Exit (ExitCode(..))
+import           Coffee.Bindings (Coffee(..), coffeeCompile)
+import           Control.Monad (liftM)
 import           Paths_snaplet_coffee
 
 initCoffee :: SnapletInit c CoffeeScript
@@ -51,8 +52,9 @@ compileFiles cfg fp = do
     case result of
         ExitSuccess   -> return ()
         ExitFailure x -> error $ show x ++ errMsg
-  where msg1 = " - Error while compiling CoffeeScript\n"
-        msg2 = "Does this file really exist?\n"
-        msg3 = "Is your /snaplets/coffee/devel.cfg correct?\n"
-        msg4 = "You might need to restart the server after fixing the issue."
-        errMsg = msg1 ++ msg2 ++ msg3 ++ msg4
+  where errMsg = unlines
+                 [ " - Error while compiling CoffeeScript"
+                 , "Does this file really exist?"
+                 , "Is your /snaplets/coffee/devel.cfg correct?"
+                 , "You might need to restart the server after fixing the issue."
+                 ]
