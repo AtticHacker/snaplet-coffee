@@ -43,8 +43,9 @@ compileFiles :: MonadIO m => CoffeeScript -> m ()
 compileFiles cfg = do
     let coffeeStruct = Coffee (compiler cfg) False
     fullPaths <- liftIO $ allCoffeeFiles cfg
-    result <- liftIO $ coffeeCompile fullPaths
+    result    <- liftIO $ coffeeCompile fullPaths
               (Just (destinationDir cfg)) coffeeStruct
     case result of
         ExitSuccess   -> return ()
-        ExitFailure x -> error $ show x ++ " - Error while compiling CoffeeScript\nIs your /snaplets/coffee/devel.cfg correct?\nYou might need to restart the server after fixing the issue."
+        ExitFailure x -> error $ show x ++ errMsg
+  where errMsg = " - Error while compiling CoffeeScript\nIs your /snaplets/coffee/devel.cfg correct?\nYou might need to restart the server after fixing the issue."

@@ -42,6 +42,7 @@ getCompilerMode Nothing              = Production
 getCompilerMode (Just "Development") = Development
 getCompilerMode (Just "Production")  = Production
 getCompilerMode (Just x)             = error $ x ++ " is not a valid Compiler mode for snaplet-coffeescript. -- devel.cfg"
+
 getDestDir :: Maybe String -> CoffeeScript -> FilePath
 getDestDir Nothing   c = destDir c
 getDestDir (Just "") c = destDir c
