@@ -3,16 +3,18 @@
 
 name:                snaplet-coffee
 version:             0.1.0.0
--- synopsis:
-description:         A simple snaplet based off of 'snaplet-fay'
-                     but for CoffeeScript.
+synopsis:            CoffeeScript for Snap, auto-compilation and pre-compilation.
+description:         A simple snaplet based off of 'snaplet-fay' but for CoffeeScript.
 license:             GPL-3
 license-file:        LICENSE
 author:              Kevin van Rooijen
 maintainer:          kevin.van.rooijen@gmail.com
 copyright:           Copyright (C) 2013 Kevin van Rooijen
-category:            Snap
+category:            Web, Snap
 build-type:          Simple
+homepage:            https://github.com/AtticHacker/snaplet-coffee
+bug-reports:         https://github.com/AtticHacker/snaplet-coffee/issues
+
 cabal-version:       >=1.8
 
 data-files:

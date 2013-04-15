@@ -19,6 +19,7 @@ import           Coffee.Bindings (Coffee(..), coffeeCompile)
 import           Control.Monad (liftM)
 import           Paths_snaplet_coffee
 
+-- | Snaplet-Coffee initializer
 initCoffee :: SnapletInit c CoffeeScript
 initCoffee = makeSnaplet "coffee" "description" dataDir $ do
     config <- getSnapletUserConfig
@@ -35,6 +36,7 @@ initCoffee = makeSnaplet "coffee" "description" dataDir $ do
   where dataDir = Just $ liftM (++ "/resources") getDataDir
         configOptions = ["compilerPath", "compilerMode", "destinationPath"]
 
+-- | Serves the compiled CoffeeScript files
 coffeeServe :: Handler b CoffeeScript ()
 coffeeServe = do
     modifyResponse . setContentType $ "text/javascript;charset=utf-8"
@@ -44,6 +46,7 @@ coffeeServe = do
     when (Development == compileMode cfg) $ liftIO $ compileFiles cfg [requestedFile]
     serveDirectory $ destinationDir cfg
 
+-- | Compiles the files that are being served, but ignores all other files.
 compileFiles :: MonadIO m => CoffeeScript -> [FilePath] -> m ()
 compileFiles cfg fp = do
     let coffeeStruct = Coffee (compiler cfg) False
