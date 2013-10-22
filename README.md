@@ -29,7 +29,7 @@ Application.hs:
 ```
 import Snap.Snaplet.Coffee
 
-data App = App { _coffee :: Snaplet Coffee }
+data App = App { _coffee :: Snaplet CoffeeScript }
 
 makeLenses ''App
 ```
